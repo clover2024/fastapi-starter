@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI 入门项目推荐 - 新手学习指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0EA5E9',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: '#1F2937',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        @layer utilities {
+            .gradient-bg {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .fade-in {
+                animation: fadeIn 0.6s ease-in-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .tag {
+                @apply px-3 py-1 rounded-full text-xs font-medium;
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-light text-dark">
+    <!-- Hero Section -->
+    <header class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 fade-in">
+                <i class="fa fa-rocket mr-4"></i>
+                FastAPI 入门项目推荐
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 fade-in">
+                为初学者精心挑选的经典项目，助你快速掌握现代 API 开发
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm">
+                <span class="bg-white/20 px-4 py-2 rounded-full">
+                    <i class="fa fa-star mr-2"></i>精选项目
+                </span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">
+                    <i class="fa fa-code mr-2"></i>实战导向
+                </span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">
+                    <i class="fa fa-users mr-2"></i>社区认可
+                </span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">
+                    <i class="fa fa-bullseye mr-2"></i>循序渐进
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Introduction -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6 text-dark">为什么选择 FastAPI？</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    FastAPI 是一个现代、快速（高性能）的 Web 框架，用于构建 API 接口。
+                    它基于标准的 Python 类型提示，具有自动生成的交互式文档、强大的数据验证等特性。
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+                        <i class="fa fa-bolt text-3xl text-primary mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">极速性能</h3>
+                        <p class="text-gray-600">基于 Starlette 和 Pydantic，性能接近 Node.js 和 Go</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl">
+                        <i class="fa fa-magic text-3xl text-secondary mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">自动文档</h3>
+                        <p class="text-gray-600">自动生成 Swagger UI 和 ReDoc 交互式文档</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-xl">
+                        <i class="fa fa-shield text-3xl text-accent mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">类型安全</h3>
+                        <p class="text-gray-600">基于 Python 类型提示的强大数据验证</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Categories -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-dark">
+                <i class="fa fa-th-large mr-3"></i>项目分类推荐
+            </h2>
+            
+            <!-- 基础入门项目 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center">
+                    <span class="bg-primary text-white px-6 py-2 rounded-full">
+                        <i class="fa fa-play mr-2"></i>基础入门项目
+                    </span>
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-rocket mr-2"></i>FastAPI 快速入门
+                            </h4>
+                            <p class="opacity-90">完整的基础项目，从零开始学习 FastAPI</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-blue-100 text-blue-800">
+                                    <i class="fa fa-star mr-1"></i>75 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2021年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-green-100 text-green-800">FastAPI</span>
+                                    <span class="tag bg-purple-100 text-purple-800">SQLAlchemy</span>
+                                    <span class="tag bg-orange-100 text-orange-800">Docker</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                包含完整的项目结构、数据库集成、容器化部署等企业级特性，非常适合初学者系统性学习。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/veryacademy/YT_FastAPI_Beginner_Fast-Track" 
+                                   target="_blank" 
+                                   class="flex-1 bg-primary text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-blue-600 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-green-500 to-teal-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-graduation-cap mr-2"></i>FastAPI 初学者教程
+                            </h4>
+                            <p class="opacity-90">专为新手设计的循序渐进教程</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-green-100 text-green-800">
+                                    <i class="fa fa-star mr-1"></i>41 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2021年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-blue-100 text-blue-800">Heroku</span>
+                                    <span class="tag bg-red-100 text-red-800">JWT</span>
+                                    <span class="tag bg-yellow-100 text-yellow-800">Cloudinary</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                涵盖用户认证、文件上传、部署等实用功能，每个章节都有详细的讲解和示例代码。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/MKFast/FastAPI-Tuto" 
+                                   target="_blank" 
+                                   class="flex-1 bg-secondary text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-green-600 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-orange-500 to-red-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-book mr-2"></i>FastAPI 完整课程
+                            </h4>
+                            <p class="opacity-90">Udemy 课程配套代码仓库</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-orange-100 text-orange-800">
+                                    <i class="fa fa-star mr-1"></i>课程项目
+                                </span>
+                                <span class="text-sm text-gray-500">2021年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-purple-100 text-purple-800">PostgreSQL</span>
+                                    <span class="tag bg-indigo-100 text-indigo-800">认证</span>
+                                    <span class="tag bg-pink-100 text-pink-800">教程</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                配合视频教程的完整项目，从基础概念到高级特性，适合跟着视频一步步学习。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/MKFast/FastAPI-Ecommerce-Tutorial" 
+                                   target="_blank" 
+                                   class="flex-1 bg-accent text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-yellow-600 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 现代技术栈项目 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center">
+                    <span class="bg-secondary text-white px-6 py-2 rounded-full">
+                        <i class="fa fa-bullseye mr-2"></i>现代技术栈项目
+                    </span>
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 4 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-purple-500 to-pink-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-bullseye mr-2"></i>LLM API 入门套件
+                            </h4>
+                            <p class="opacity-90">结合 LangChain 的现代化 AI API</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-purple-100 text-purple-800">
+                                    <i class="fa fa-star mr-1"></i>102 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2023年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-blue-100 text-blue-800">LangChain</span>
+                                    <span class="tag bg-green-100 text-green-800">OpenAI</span>
+                                    <span class="tag bg-orange-100 text-orange-800">LLM</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习如何构建基于大语言模型的 API，支持本地模型和 OpenAI API，非常适合 AI 应用开发。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/teers/llm-api-starter" 
+                                   target="_blank" 
+                                   class="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-purple-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-teal-500 to-cyan-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-shield mr-2"></i>OAuth2 认证博客
+                            </h4>
+                            <p class="opacity-90">企业级认证系统实现</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-teal-100 text-teal-800">
+                                    <i class="fa fa-star mr-1"></i>157 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2022年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-red-100 text-red-800">OAuth2</span>
+                                    <span class="tag bg-blue-100 text-blue-800">JWT</span>
+                                    <span class="tag bg-green-100 text-green-800">权限管理</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习现代 Web 应用的认证和授权机制，包含完整的用户管理和权限控制系统。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/yezz123/Doge" 
+                                   target="_blank" 
+                                   class="flex-1 bg-teal-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-teal-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-indigo-500 to-blue-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-cogs mr-2"></i>REST API 服务
+                            </h4>
+                            <p class="opacity-90">高性能博客内容管理 API</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-indigo-100 text-indigo-800">
+                                    <i class="fa fa-star mr-1"></i>58 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2023年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-purple-100 text-purple-800">RESTful</span>
+                                    <span class="tag bg-orange-100 text-orange-800">Pydantic</span>
+                                    <span class="tag bg-pink-100 text-pink-800">异步</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习构建高性能的 RESTful API，包含异步处理、数据验证和完整的错误处理机制。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/cuongld2/rest_api_service_fast" 
+                                   target="_blank" 
+                                   class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-indigo-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 实战项目 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center">
+                    <span class="bg-accent text-white px-6 py-2 rounded-full">
+                        <i class="fa fa-briefcase mr-2"></i>实战项目
+                    </span>
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 7 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-red-500 to-pink-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-shopping-cart mr-2"></i>电子商务 API
+                            </h4>
+                            <p class="opacity-90">完整的在线购物系统后端</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-red-100 text-red-800">
+                                    <i class="fa fa-star mr-1"></i>84 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2024年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-green-100 text-green-800">Supabase</span>
+                                    <span class="tag bg-blue-100 text-blue-800">支付集成</span>
+                                    <span class="tag bg-purple-100 text-purple-800">购物车</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习构建完整的电子商务系统，包含产品管理、订单处理、支付集成等核心功能。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/aliseyedi01/FastAPI-Ecommerce-" 
+                                   target="_blank" 
+                                   class="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-red-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 8 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-pink-500 to-rose-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-users mr-2"></i>社交媒体 API
+                            </h4>
+                            <p class="opacity-90">现代化社交网络后端服务</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-pink-100 text-pink-800">
+                                    <i class="fa fa-star mr-1"></i>59 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2023年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-blue-100 text-blue-800">Docker Compose</span>
+                                    <span class="tag bg-green-100 text-green-800">CI/CD</span>
+                                    <span class="tag bg-orange-100 text-orange-800">测试</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习构建社交网络应用，包含用户关系、内容分享、实时通知等社交功能。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/nvarrone/fastapi-social-media" 
+                                   target="_blank" 
+                                   class="flex-1 bg-pink-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-pink-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 9 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-600 p-6 text-white">
+                            <h4 class="text-xl font-bold mb-2">
+                                <i class="fa fa-database mr-2"></i>MongoDB 博客 API
+                            </h4>
+                            <p class="opacity-90">NoSQL 数据库集成示例</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="tag bg-cyan-100 text-cyan-800">
+                                    <i class="fa fa-star mr-1"></i>64 stars
+                                </span>
+                                <span class="text-sm text-gray-500">2022年</span>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag bg-green-100 text-green-800">MongoDB</span>
+                                    <span class="tag bg-purple-100 text-purple-800">ODM</span>
+                                    <span class="tag bg-orange-100 text-orange-800">NoSQL</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">
+                                学习如何在 FastAPI 中集成 MongoDB 数据库，掌握 NoSQL 数据库的使用方法。
+                            </p>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/Princekrampah/Mongodb_fastapi_blog" 
+                                   target="_blank" 
+                                   class="flex-1 bg-cyan-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-cyan-700 transition-colors">
+                                    <i class="fa fa-github mr-2"></i>查看项目
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Path -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-dark">
+                <i class="fa fa-road mr-3"></i>学习路径建议
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary to-secondary"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="relative pl-12 mb-12">
+                        <div class="absolute left-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                            1
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-3 text-dark">
+                                <i class="fa fa-play mr-2"></i>基础入门阶段
+                            </h3>
+                            <p class="text-gray-600 mb-4">掌握 FastAPI 基本概念和核心特性</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    学习 <strong>veryacademy/YT_FastAPI_Beginner_Fast-Track</strong> - 完整基础项目
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    掌握 <strong>MKFast/FastAPI-Tuto</strong> - 循序渐进教程
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative pl-12 mb-12">
+                        <div class="absolute left-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+                            2
+                        </div>
+                        <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-3 text-dark">
+                                <i class="fa fa-cogs mr-2"></i>技术深化阶段
+                            </h3>
+                            <p class="text-gray-600 mb-4">学习现代技术栈和最佳实践</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    掌握 <strong>yezz123/Doge</strong> - OAuth2 认证系统
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    学习 <strong>teers/llm-api-starter</strong> - LLM 集成
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative pl-12 mb-12">
+                        <div class="absolute left-0 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold">
+                            3
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-3 text-dark">
+                                <i class="fa fa-briefcase mr-2"></i>实战项目阶段
+                            </h3>
+                            <p class="text-gray-600 mb-4">通过真实项目提升实战能力</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    完成 <strong>aliseyedi01/FastAPI-Ecommerce-</strong> - 电子商务系统
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    开发 <strong>nvarrone/fastapi-social-media</strong> - 社交媒体应用
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative pl-12">
+                        <div class="absolute left-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            4
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-3 text-dark">
+                                <i class="fa fa-trophy mr-2"></i>高级应用阶段
+                            </h3>
+                            <p class="text-gray-600 mb-4">探索高级特性和性能优化</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    学习数据库优化、缓存策略、异步编程
+                                </div>
+                                <div class="flex items-center text-sm text-gray-700">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    掌握部署、监控、CI/CD 等 DevOps 技能
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-dark">
+                <i class="fa fa-lightbulb-o mr-3"></i>学习建议与技巧
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-code text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">动手实践</h3>
+                    <p class="text-gray-600 text-sm">
+                        不要只看代码，一定要动手敲代码、运行项目、修改功能，这样才能真正掌握。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-book text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">阅读文档</h3>
+                    <p class="text-gray-600 text-sm">
+                        仔细阅读 FastAPI 官方文档，理解每个特性的设计理念和使用场景。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-search text-2xl text-accent"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">调试学习</h3>
+                    <p class="text-gray-600 text-sm">
+                        学会使用调试工具，理解代码的执行流程，遇到问题多思考原因。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-users text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">加入社区</h3>
+                    <p class="text-gray-600 text-sm">
+                        参与 FastAPI 社区讨论，向他人请教问题，分享自己的学习心得。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-bullseye text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">持续练习</h3>
+                    <p class="text-gray-600 text-sm">
+                        API 开发需要持续练习，尝试构建自己的项目，不断提升技能。
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-star text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">关注最佳实践</h3>
+                    <p class="text-gray-600 text-sm">
+                        学习优秀项目的代码风格和架构设计，培养良好的编程习惯。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12 text-dark">
+                <i class="fa fa-book mr-3"></i>推荐学习资源
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Official Resources -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4 text-dark">
+                            <i class="fa fa-bullseye mr-2 text-primary"></i>官方资源
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://fastapi.tiangolo.com/" target="_blank" class="flex items-center text-gray-700 hover:text-primary transition-colors">
+                                <i class="fa fa-external-link mr-3"></i>
+                                FastAPI 官方文档
+                            </a>
+                            <a href="https://github.com/tiangolo/fastapi" target="_blank" class="flex items-center text-gray-700 hover:text-primary transition-colors">
+                                <i class="fa fa-github mr-3"></i>
+                                FastAPI GitHub 仓库
+                            </a>
+                            <a href="https://fastapi.tiangolo.com/tutorial/" target="_blank" class="flex items-center text-gray-700 hover:text-primary transition-colors">
+                                <i class="fa fa-play-circle mr-3"></i>
+                                官方教程
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Resources -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-4 text-dark">
+                            <i class="fa fa-users mr-2 text-secondary"></i>社区资源
+                        </h3>
+                        <div class="space-y-3">
+                            <a href="https://github.com/mjhea0/awesome-fastapi" target="_blank" class="flex items-center text-gray-700 hover:text-secondary transition-colors">
+                                <i class="fa fa-star mr-3"></i>
+                                Awesome FastAPI 精选资源
+                            </a>
+                            <a href="https://stackoverflow.com/questions/tagged/fastapi" target="_blank" class="flex items-center text-gray-700 hover:text-secondary transition-colors">
+                                <i class="fa fa-question-circle mr-3"></i>
+                                Stack Overflow FastAPI 标签
+                            </a>
+                            <a href="https://discord.com/invite/UVvZ6Jt" target="_blank" class="flex items-center text-gray-700 hover:text-secondary transition-colors">
+                                <i class="fa fa-comments mr-3"></i>
+                                FastAPI Discord 社区
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold mb-2">
+                    <i class="fa fa-rocket mr-2"></i>开始你的 FastAPI 之旅
+                </h3>
+                <p class="opacity-90">
+                    选择一个项目开始学习，坚持实践，你很快就能掌握现代 API 开发技能！
+                </p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://github.com" target="_blank" class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
+                    <i class="fa fa-github"></i>
+                </a>
+                <a href="https://fastapi.tiangolo.com" target="_blank" class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
+                    <i class="fa fa-globe"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30 transition-colors">
+                    <i class="fa fa-code"></i>
+                </a>
+            </div>
+            <div class="border-t border-white/20 pt-6">
+                <p class="text-sm opacity-75">
+                    © 2024 FastAPI 学习指南 | 为初学者精心整理的学习资源
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 opacity-0 pointer-events-none">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to top functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopButton.classList.add('opacity-100');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+                backToTopButton.classList.remove('opacity-100');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.card-hover, section').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
